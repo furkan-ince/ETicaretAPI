@@ -6,13 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ETicaretAPI.Application.Repositories;
+using ETicaretAPI.Presistence.Repositories;
 
 namespace ETicaretAPI.Presistence
 {
     public static class ServiceRegistration
     {
-        public static void AddPresistenceService(this IServiceCollection services) {
+        public static void AddPresistenceService(this IServiceCollection services)
+        {
             services.AddDbContext<ETicaretAPIDbContext>(options => options.UseNpgsql(Configuration.ConnectionString));
+            services.AddScoped<ICustomerReadRepository, CustomerReadRepository>();
+            services.AddScoped<ICustomerWriteRepository, CustomerWriteRepository>();
+            services.AddScoped<IOrderReadRepository, OrderReadRepository>();
+            services.AddScoped<IOrderWriteRepository, OrderWriteRepository>();
+            services.AddScoped<IProductReadRepository, ProductReadRepository>();
+            services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
         }
     }
 }
